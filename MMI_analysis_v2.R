@@ -2,11 +2,15 @@
 
 Packages = c("dplyr", "stringr", "readxl", "tidyr", "heatmaply", "ggplot2",
              "reshape2", "lares", "corrr", "corrplot", "viridis", "grid", "gridExtra", "gridGraphics",
-             "ComplexHeatmap", "circlize", "kableExtra", "janitor", "RColorBrewer", "randomcoloR", "packcircles", "ggbeeswarm", "ggpubr",
+             "circlize", "kableExtra", "janitor", "RColorBrewer", "randomcoloR", "packcircles", "ggbeeswarm", "ggpubr",
              "scales", "networkD3", "gridGraphics", "grid", "ggcorrplot", "vegan", "plyr", "tibble","ggthemes", "circlize",
              "writexl")
+package.check = lapply(Packages,FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE) }})
 
-lapply(Packages, library, character.only = TRUE)
+lapply(Packages, library, character.only = TRUE)  #package not installed:"ComplexHeatmap"
 
 # Section1: Functions -----------------------------------------------------
 
@@ -387,8 +391,8 @@ bc.collapse = colSums(Exp38[c(915,1312,1864),])
 Exp38[c(915,1312,1864),]=0
 Exp38[915,]=bc.collapse
 
-df.MI2= df.MI[,-grep("Exp38_", names(df.MI))]
-df.MI = cbind(df.MI2, Exp38)
+df.MI.temp= df.MI[,-grep("Exp38_", names(df.MI))]
+df.MI = cbind(df.MI.temp, Exp38)
 
 # Section3: Figures ----------------------------------------------------
 
